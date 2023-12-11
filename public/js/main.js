@@ -19,26 +19,26 @@ Promise.all([
   loadBackgroundSprites(),
   loadLevel("1-1"),
 ]).then(([marioSprite, backgroundSprites, level]) => {
-  const comp = new Compositor();
+  const compositor = new Compositor();
 
   const backgroundLayer = createBackgroundLayer(
     level.backgrounds,
     backgroundSprites
   );
-  comp.layers.push(backgroundLayer);
+  compositor.layers.push(backgroundLayer);
 
-  const pos = {
+  const position = {
     x: 0,
     y: 0,
   };
 
-  const spriteLayer = createSpriteLayer(marioSprite, pos);
-  comp.layers.push(spriteLayer);
+  const spriteLayer = createSpriteLayer(marioSprite, position);
+  compositor.layers.push(spriteLayer);
 
   function update() {
-    comp.draw(context);
-    pos.x += 2;
-    pos.y += 2;
+    compositor.draw(context);
+    position.x += 2;
+    position.y += 2;
     requestAnimationFrame(update);
   }
 
