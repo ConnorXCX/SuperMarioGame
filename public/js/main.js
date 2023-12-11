@@ -26,11 +26,11 @@ Promise.all([createMario(), loadBackgroundSprites(), loadLevel("1-1")]).then(
     const SPACE = 32;
     const input = new Keyboard();
     input.addMapping(32, (keyState) => {
-      if (keyState) {
-        mario.jump.start();
-      } else {
-        mario.jump.cancel();
-      }
+      // if (keyState) {
+      //   mario.jump.start();
+      // } else {
+      //   mario.jump.cancel();
+      // }
     });
     input.listenTo(window);
 
