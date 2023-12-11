@@ -1,4 +1,5 @@
 import Compositor from "./Compositor.js";
+import Timer from "./Timer.js";
 import { loadLevel } from "./loaders.js";
 import { createMario } from "./entities.js";
 import { loadBackgroundSprites } from "./sprites.js";
@@ -15,7 +16,7 @@ Promise.all([createMario(), loadBackgroundSprites(), loadLevel("1-1")]).then(
       level.backgrounds,
       backgroundSprites
     );
-    // compositor.layers.push(backgroundLayer);
+    compositor.layers.push(backgroundLayer);
 
     const gravity = 30;
     mario.position.set(64, 180);
@@ -24,21 +25,12 @@ Promise.all([createMario(), loadBackgroundSprites(), loadLevel("1-1")]).then(
     const spriteLayer = createSpriteLayer(mario);
     compositor.layers.push(spriteLayer);
 
-    let deltaTime = 0;
-    let lastTime = 0;
-
-    function update(time) {
-      deltaTime = (time - lastTime) / 1000;
+    const timer = new Timer(1 / 60);
+    timer.update = function update(deltaTime) {
       compositor.draw(context);
       mario.update(deltaTime);
-      console.log(mario.position);
       mario.velocity.y += gravity;
-      requestAnimationFrame(update);
-      // setTimeout(update, 1000 / 10);
-
-      lastTime = time;
-    }
-
-    update(0);
+    };
+    timer.start();
   }
 );
