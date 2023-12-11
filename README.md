@@ -10,3 +10,4 @@ References:
 2. [CanvasRenderingContext2D: drawImage() method](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage)
 3. [Window: requestAnimationFrame() method](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame)
 4. [Learn and use Composition in JavaScript and TypeScript](https://dev.to/itnext/learn-and-use-composition-in-javascript-and-typescript-3f17)
+5. [Promise.prototype.then()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then)
