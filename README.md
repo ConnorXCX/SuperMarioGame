@@ -1,5 +1,9 @@
 # Super Mario Game
 
+Classic Super Mario game written in JavaScript and minimal HTML.
+
+Deployed Game: TBD
+
 References:
 
 1. [Super Mario Bros in JavaScript](https://youtube.com/playlist?list=PLS8HfBXv9ZWWe8zXrViYbIM2Hhylx8DZx&si=5HTGr9GR1zUIh8JW)
