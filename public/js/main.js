@@ -1,11 +1,16 @@
 import Compositor from "./Compositor.js";
 import Timer from "./Timer.js";
+import Keyboard from "./KeyboardState.js";
 import { loadLevel } from "./loaders.js";
 import { createMario } from "./entities.js";
 import { loadBackgroundSprites } from "./sprites.js";
 import { createBackgroundLayer, createSpriteLayer } from "./layers.js";
 
-window.addEventListener("keydown", (event) => {});
+const input = new Keyboard();
+input.addMapping(32, (keyState) => {
+  console.log(keyState);
+});
+input.listenTo(window);
 
 const canvas = document.getElementById("screen");
 const context = canvas.getContext("2d");
