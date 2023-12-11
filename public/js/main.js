@@ -20,17 +20,17 @@ Promise.all([createMario(), loadBackgroundSprites(), loadLevel("1-1")]).then(
     compositor.layers.push(backgroundLayer);
 
     const gravity = 2000;
-    mario.position.set(64, 180);
-    mario.velocity.set(200, -600);
+    mario.pos.set(64, 180);
+    mario.vel.set(200, -600);
 
     const SPACE = 32;
     const input = new Keyboard();
     input.addMapping(32, (keyState) => {
-      // if (keyState) {
-      //   mario.jump.start();
-      // } else {
-      //   mario.jump.cancel();
-      // }
+      if (keyState) {
+        mario.jump.start();
+      } else {
+        mario.jump.cancel();
+      }
     });
     input.listenTo(window);
 
@@ -41,7 +41,7 @@ Promise.all([createMario(), loadBackgroundSprites(), loadLevel("1-1")]).then(
     timer.update = function update(deltaTime) {
       mario.update(deltaTime);
       compositor.draw(context);
-      mario.velocity.y += gravity * deltaTime;
+      mario.vel.y += gravity * deltaTime;
     };
     timer.start();
   }

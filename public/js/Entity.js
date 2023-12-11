@@ -1,19 +1,19 @@
 import { Vector } from "./math.js";
 
-// export class Trait {
-//   constructor(name) {
-//     this.NAME = name;
-//   }
+export class Trait {
+  constructor(name) {
+    this.NAME = name;
+  }
 
-//   update() {
-//     console.warn("Unhandled update call in Trait.");
-//   }
-// }
+  update() {
+    console.warn("Unhandled update call in Trait.");
+  }
+}
 
 export default class Entity {
   constructor() {
-    this.position = new Vector(0, 0);
-    this.velocity = new Vector(0, 0);
+    this.pos = new Vector(0, 0);
+    this.vel = new Vector(0, 0);
 
     this.traits = [];
   }
