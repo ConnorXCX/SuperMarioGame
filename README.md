@@ -1,6 +1,6 @@
 # Super Mario Game
 
-Classic Super Mario game written in JavaScript and minimal HTML.
+Classic Super Mario game written in JavaScript.
 
 Deployed Game: TBD
 
