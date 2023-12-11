@@ -15,20 +15,30 @@ Promise.all([createMario(), loadBackgroundSprites(), loadLevel("1-1")]).then(
       level.backgrounds,
       backgroundSprites
     );
-    compositor.layers.push(backgroundLayer);
+    // compositor.layers.push(backgroundLayer);
 
-    const gravity = 0.5;
+    const gravity = 30;
+    mario.position.set(64, 180);
+    mario.velocity.set(200, -600);
 
     const spriteLayer = createSpriteLayer(mario);
     compositor.layers.push(spriteLayer);
 
-    function update() {
+    let deltaTime = 0;
+    let lastTime = 0;
+
+    function update(time) {
+      deltaTime = (time - lastTime) / 1000;
       compositor.draw(context);
-      mario.update();
+      mario.update(deltaTime);
+      console.log(mario.position);
       mario.velocity.y += gravity;
       requestAnimationFrame(update);
+      // setTimeout(update, 1000 / 10);
+
+      lastTime = time;
     }
 
-    update();
+    update(0);
   }
 );
