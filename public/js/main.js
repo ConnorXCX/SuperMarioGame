@@ -24,6 +24,12 @@ Promise.all([createMario(), loadLevel("1-1")]).then(([mario, level]) => {
       mario.jump.cancel();
     }
   });
+  input.addMapping(39, (keyState) => {
+    mario.go.dir = keyState;
+  });
+  input.addMapping(37, (keyState) => {
+    mario.go.dir = -keyState;
+  });
   input.listenTo(window);
 
   ["mousedown", "mousemove"].forEach((eventName) => {
