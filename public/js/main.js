@@ -11,7 +11,7 @@ Promise.all([createMario(), loadLevel("1-1")]).then(([mario, level]) => {
   const gravity = 2000;
   mario.pos.set(64, 64);
 
-  createCollisionLayer(level);
+  level.comp.layers.push(createCollisionLayer(level));
 
   level.entities.add(mario);
 
