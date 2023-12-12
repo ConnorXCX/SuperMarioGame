@@ -1,5 +1,9 @@
 import Level from "./Level.js";
-import { createBackgroundLayer, createSpriteLayer } from "./layers.js";
+import {
+  createBackgroundLayer,
+  createSpriteLayer,
+  createCollisionLayer,
+} from "./layers.js";
 import { loadBackgroundSprites } from "./sprites.js";
 
 export function loadImage(url) {
@@ -40,6 +44,9 @@ export function loadLevel(name) {
 
     const spriteLayer = createSpriteLayer(level.entities);
     level.comp.layers.push(spriteLayer);
+
+    // Debug code to show border around hitbox.
+    // level.comp.layers.push(createCollisionLayer(level));
 
     // console.table(level.tiles.grid);
 
