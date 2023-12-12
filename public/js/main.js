@@ -14,7 +14,7 @@ Promise.all([createMario(), loadLevel("1-1")]).then(([mario, level]) => {
 
   mario.pos.set(64, 64);
 
-  level.comp.layers.push(createCameraLayer(camera));
+  // level.comp.layers.push(createCameraLayer(camera));
 
   level.entities.add(mario);
 
@@ -23,7 +23,7 @@ Promise.all([createMario(), loadLevel("1-1")]).then(([mario, level]) => {
   input.listenTo(window);
 
   // Debug mouse control.
-  setupMouseControl(canvas, mario, camera);
+  // setupMouseControl(canvas, mario, camera);
 
   const timer = new Timer(1 / 60);
   timer.update = function update(deltaTime) {

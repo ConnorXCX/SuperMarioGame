@@ -29,5 +29,5 @@ export function setupMouseControl(canvas, entity, camera) {
 
 // Debug code to show border around hitbox.
 export function setupHitbox(level) {
-  level.comp.layers.push(createCollisionLayer(level));
+  // level.comp.layers.push(createCollisionLayer(level));
 }
