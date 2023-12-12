@@ -2,7 +2,6 @@ import Level from "./Level.js";
 import SpriteSheet from "./SpriteSheet.js";
 import { createBackgroundLayer, createSpriteLayer } from "./layers.js";
 import { setupHitbox } from "./debug.js";
-// import { loadBackgroundSprites } from "./sprites.js";
 
 export function loadImage(url) {
   return new Promise((resolve) => {
@@ -66,7 +65,6 @@ function loadSpriteSheet(name) {
 export function loadLevel(name) {
   return Promise.all([
     loadJSON(`./levels/${name}.json`),
-    // loadBackgroundSprites(),
     loadSpriteSheet("overworld"),
   ]).then(([levelSpec, backgroundSprites]) => {
     const level = new Level();
