@@ -8,6 +8,7 @@ export default class Level {
     this.entities = new Set();
     this.tiles = new Matrix();
     this.tileCollider = new TileCollider(this.tiles);
+    this.gravity = 2000;
   }
 
   update(deltaTime) {
@@ -21,6 +22,8 @@ export default class Level {
       this.tileCollider.checkY(entity);
 
       this.tileCollider.test(entity);
+
+      entity.vel.y += this.gravity * deltaTime;
     });
   }
 }
