@@ -6,7 +6,7 @@
 
 export class Matrix {
   constructor() {
-    this.grid = {};
+    this.grid = [];
   }
 
   get(x, y) {
