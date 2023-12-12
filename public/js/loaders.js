@@ -25,6 +25,7 @@ function createTiles(level, backgrounds) {
       for (let y = yStart; y < yEnd; ++y) {
         level.tiles.set(x, y, {
           name: background.tile,
+          type: background.type,
         });
       }
     }
@@ -63,25 +64,26 @@ function loadSpriteSheet(name) {
 }
 
 export function loadLevel(name) {
-  return Promise.all([
-    loadJSON(`./levels/${name}.json`),
-    loadSpriteSheet("overworld"),
-  ]).then(([levelSpec, backgroundSprites]) => {
-    const level = new Level();
+  return loadJSON(`./levels/${name}.json`)
+    .then((levelSpec) =>
+      Promise.all([levelSpec, loadSpriteSheet(levelSpec.spriteSheet)])
+    )
+    .then(([levelSpec, backgroundSprites]) => {
+      const level = new Level();
 
-    createTiles(level, levelSpec.backgrounds);
+      createTiles(level, levelSpec.backgrounds);
 
-    const backgroundLayer = createBackgroundLayer(level, backgroundSprites);
-    level.comp.layers.push(backgroundLayer);
+      const backgroundLayer = createBackgroundLayer(level, backgroundSprites);
+      level.comp.layers.push(backgroundLayer);
 
-    const spriteLayer = createSpriteLayer(level.entities);
-    level.comp.layers.push(spriteLayer);
+      const spriteLayer = createSpriteLayer(level.entities);
+      level.comp.layers.push(spriteLayer);
 
-    // Debug hitbox.
-    setupHitbox(level);
+      // Debug hitbox.
+      setupHitbox(level);
 
-    // console.table(level.tiles.grid);
+      // console.table(level.tiles.grid);
 
-    return level;
-  });
+      return level;
+    });
 }
