@@ -10,7 +10,7 @@ export function createMario() {
     mario.size.set(14, 16);
 
     mario.addTrait(new Jump());
-    mario.addTrait(new Velocity());
+    // mario.addTrait(new Velocity());
     mario.addTrait(new Go());
 
     mario.draw = function drawMario(context) {
