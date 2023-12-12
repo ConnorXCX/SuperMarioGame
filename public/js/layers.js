@@ -28,6 +28,7 @@ export function createCollisionLayer(level) {
   const tileResolver = level.tileCollider.tiles;
   const tileSize = tileResolver.tileSize;
 
+  // TODO: Figure out what is going on here.
   const getByIndexOriginal = tileResolver.getByIndex;
   tileResolver.getByIndex = function getByIndexFake(x, y) {
     resolvedTiles.push({ x, y });
@@ -39,6 +40,13 @@ export function createCollisionLayer(level) {
     resolvedTiles.forEach(({ x, y }) => {
       context.beginPath();
       context.rect(x * tileSize, y * tileSize, tileSize, tileSize);
+      context.stroke();
+    });
+
+    context.strokeStyle = "red";
+    level.entities.forEach((entity) => {
+      context.beginPath();
+      context.rect(entity.pos.x, entity.pos.y, entity.size.x, entity.size.y);
       context.stroke();
     });
 

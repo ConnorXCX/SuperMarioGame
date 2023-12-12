@@ -6,6 +6,7 @@ import { loadMarioSprite } from "./sprites.js";
 export function createMario() {
   return loadMarioSprite().then((sprites) => {
     const mario = new Entity();
+    mario.size.set(14, 16);
 
     mario.addTrait(new Jump());
     mario.addTrait(new Velocity());
