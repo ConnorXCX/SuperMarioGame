@@ -11,3 +11,4 @@ References:
 3. [Window: requestAnimationFrame() method](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame)
 4. [Learn and use Composition in JavaScript and TypeScript](https://dev.to/itnext/learn-and-use-composition-in-javascript-and-typescript-3f17)
 5. [Promise.prototype.then()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then)
+6. [Function.prototype.call()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call)
