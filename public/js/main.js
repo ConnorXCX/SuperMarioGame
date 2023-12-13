@@ -29,6 +29,11 @@ Promise.all([createMario(), loadLevel("1-1")]).then(([mario, level]) => {
   const timer = new Timer(1 / 60);
   timer.update = function update(deltaTime) {
     level.update(deltaTime);
+
+    if (mario.pos.x > 100) {
+      camera.pos.x = mario.pos.x - 100;
+    }
+
     level.comp.draw(context, camera);
   };
   timer.start();
