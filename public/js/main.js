@@ -14,6 +14,7 @@ Promise.all([createMario(), loadLevel("1-1")]).then(([mario, level]) => {
 
   mario.pos.set(64, 64);
 
+  // Debug camera border.
   // level.comp.layers.push(createCameraLayer(camera));
 
   level.entities.add(mario);
