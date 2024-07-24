@@ -18,36 +18,6 @@ function loadJSON(url) {
   return fetch(url).then((r) => r.json());
 }
 
-function createTiles(level, backgrounds) {
-  function applyRange(background, xStart, xLen, yStart, yLen) {
-    const xEnd = xStart + xLen;
-    const yEnd = yStart + yLen;
-    for (let x = xStart; x < xEnd; ++x) {
-      for (let y = yStart; y < yEnd; ++y) {
-        level.tiles.set(x, y, {
-          name: background.tile,
-          type: background.type,
-        });
-      }
-    }
-  }
-
-  backgrounds.forEach((background) => {
-    background.ranges.forEach((range) => {
-      if (range.length === 4) {
-        const [xStart, xLen, yStart, yLen] = range;
-        applyRange(background, xStart, xLen, yStart, yLen);
-      } else if (range.length === 3) {
-        const [xStart, xLen, yStart] = range;
-        applyRange(background, xStart, xLen, yStart, 1);
-      } else if (range.length === 2) {
-        const [xStart, yStart] = range;
-        applyRange(background, xStart, 1, yStart, 1);
-      }
-    });
-  });
-}
-
 export function loadSpriteSheet(name) {
   return loadJSON(`./sprites/${name}.json`)
     .then((sheetSpec) =>
@@ -91,7 +61,7 @@ export function loadLevel(name) {
     .then(([levelSpec, backgroundSprites]) => {
       const level = new Level();
 
-      createTiles(level, levelSpec.backgrounds);
+      createTiles(level, levelSpec.tiles, levelSpec.patterns);
 
       const backgroundLayer = createBackgroundLayer(level, backgroundSprites);
       level.comp.layers.push(backgroundLayer);
@@ -106,4 +76,44 @@ export function loadLevel(name) {
 
       return level;
     });
+}
+
+function createTiles(level, tiles, patterns, offsetX = 0, offsetY = 0) {
+  function applyRange(tile, xStart, xLen, yStart, yLen) {
+    const xEnd = xStart + xLen;
+    const yEnd = yStart + yLen;
+
+    for (let x = xStart; x < xEnd; ++x) {
+      for (let y = yStart; y < yEnd; ++y) {
+        const derivedX = x + offsetX;
+        const derivedY = y + offsetY;
+
+        if (tile.pattern) {
+          console.log("Pattern detected", patterns[tile.pattern]);
+          const tiles = patterns[tile.pattern].tiles;
+          createTiles(level, tiles, patterns, derivedX, derivedY);
+        } else {
+          level.tiles.set(derivedX, derivedY, {
+            name: tile.name,
+            type: tile.type,
+          });
+        }
+      }
+    }
+  }
+
+  tiles.forEach((tile) => {
+    tile.ranges.forEach((range) => {
+      if (range.length === 4) {
+        const [xStart, xLen, yStart, yLen] = range;
+        applyRange(tile, xStart, xLen, yStart, yLen);
+      } else if (range.length === 3) {
+        const [xStart, xLen, yStart] = range;
+        applyRange(tile, xStart, xLen, yStart, 1);
+      } else if (range.length === 2) {
+        const [xStart, yStart] = range;
+        applyRange(tile, xStart, 1, yStart, 1);
+      }
+    });
+  });
 }
