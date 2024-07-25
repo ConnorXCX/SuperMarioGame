@@ -12,8 +12,11 @@ export function loadLevel(name) {
     .then(([levelSpec, backgroundSprites]) => {
       const level = new Level();
 
+      const mergedTiles = levelSpec.layers.reduce((mergedTiles, layerSpec) => {
+        return mergedTiles.concat(layerSpec.tiles);
+      }, []);
       const collisionGrid = createCollisionGrid(
-        levelSpec.layers[0].tiles,
+        mergedTiles,
         levelSpec.patterns
       );
       level.setCollisionGrid(collisionGrid);
