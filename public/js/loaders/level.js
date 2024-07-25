@@ -28,20 +28,48 @@ export function loadLevel(name) {
     });
 }
 
-function createTiles(level, tiles, patterns, offsetX = 0, offsetY = 0) {
-  function applyRange(tile, xStart, xLen, yStart, yLen) {
-    const xEnd = xStart + xLen;
-    const yEnd = yStart + yLen;
+function* expandSpan(xStart, xLen, yStart, yLen) {
+  const xEnd = xStart + xLen;
+  const yEnd = yStart + yLen;
 
-    for (let x = xStart; x < xEnd; ++x) {
-      for (let y = yStart; y < yEnd; ++y) {
+  for (let x = xStart; x < xEnd; ++x) {
+    for (let y = yStart; y < yEnd; ++y) {
+      yield { x, y };
+    }
+  }
+}
+
+function expandRange(range) {
+  if (range.length === 4) {
+    const [xStart, xLen, yStart, yLen] = range;
+    return expandSpan(xStart, xLen, yStart, yLen);
+  } else if (range.length === 3) {
+    const [xStart, xLen, yStart] = range;
+    return expandSpan(xStart, xLen, yStart, 1);
+  } else if (range.length === 2) {
+    const [xStart, yStart] = range;
+    return expandSpan(xStart, 1, yStart, 1);
+  }
+}
+
+function* expandRanges(ranges) {
+  for (const range of ranges) {
+    for (const item of expandRange(range)) {
+      yield item;
+    }
+  }
+}
+
+function createTiles(level, tiles, patterns) {
+  function walkTiles(tiles, offsetX, offsetY) {
+    for (const tile of tiles) {
+      for (const { x, y } of expandRanges(tile.ranges)) {
         const derivedX = x + offsetX;
         const derivedY = y + offsetY;
 
         if (tile.pattern) {
-          console.log("Pattern detected", patterns[tile.pattern]);
           const tiles = patterns[tile.pattern].tiles;
-          createTiles(level, tiles, patterns, derivedX, derivedY);
+          walkTiles(tiles, derivedX, derivedY);
         } else {
           level.tiles.set(derivedX, derivedY, {
             name: tile.name,
@@ -52,18 +80,5 @@ function createTiles(level, tiles, patterns, offsetX = 0, offsetY = 0) {
     }
   }
 
-  tiles.forEach((tile) => {
-    tile.ranges.forEach((range) => {
-      if (range.length === 4) {
-        const [xStart, xLen, yStart, yLen] = range;
-        applyRange(tile, xStart, xLen, yStart, yLen);
-      } else if (range.length === 3) {
-        const [xStart, xLen, yStart] = range;
-        applyRange(tile, xStart, xLen, yStart, 1);
-      } else if (range.length === 2) {
-        const [xStart, yStart] = range;
-        applyRange(tile, xStart, 1, yStart, 1);
-      }
-    });
-  });
+  walkTiles(tiles, 0, 0);
 }
