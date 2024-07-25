@@ -13,21 +13,23 @@ export function loadLevel(name) {
       const level = new Level();
 
       const collisionGrid = createCollisionGrid(
-        levelSpec.tiles,
+        levelSpec.layers[0].tiles,
         levelSpec.patterns
       );
       level.setCollisionGrid(collisionGrid);
 
-      const backgroundGrid = createBackgroundGrid(
-        levelSpec.tiles,
-        levelSpec.patterns
-      );
-      const backgroundLayer = createBackgroundLayer(
-        level,
-        backgroundGrid,
-        backgroundSprites
-      );
-      level.comp.layers.push(backgroundLayer);
+      levelSpec.layers.forEach((layer) => {
+        const backgroundGrid = createBackgroundGrid(
+          layer.tiles,
+          levelSpec.patterns
+        );
+        const backgroundLayer = createBackgroundLayer(
+          level,
+          backgroundGrid,
+          backgroundSprites
+        );
+        level.comp.layers.push(backgroundLayer);
+      });
 
       const spriteLayer = createSpriteLayer(level.entities);
       level.comp.layers.push(spriteLayer);
