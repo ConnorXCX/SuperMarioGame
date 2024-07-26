@@ -3,6 +3,8 @@ import { Vector } from "./math.js";
 export const Sides = {
   TOP: Symbol("top"),
   BOTTOM: Symbol("bottom"),
+  LEFT: Symbol("left"),
+  RIGHT: Symbol("right"),
 };
 
 export class Trait {
@@ -22,6 +24,7 @@ export default class Entity {
     this.pos = new Vector(0, 0);
     this.vel = new Vector(0, 0);
     this.size = new Vector(0, 0);
+    this.lifetime = 0;
 
     this.traits = [];
   }
@@ -41,5 +44,7 @@ export default class Entity {
     this.traits.forEach((trait) => {
       trait.update(this, deltaTime);
     });
+
+    this.lifetime += deltaTime;
   }
 }
