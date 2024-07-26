@@ -24,6 +24,7 @@ export default class Entity {
     this.pos = new Vector(0, 0);
     this.vel = new Vector(0, 0);
     this.size = new Vector(0, 0);
+    this.offset = new Vector(0, 0);
     this.lifetime = 0;
 
     this.traits = [];
