@@ -3,6 +3,7 @@ import Camera from "./Camera.js";
 import { loadLevel } from "./loaders/level.js";
 import { loadMario } from "./entities/Mario.js";
 import { loadGoomba } from "./entities/Goomba.js";
+import { loadKoopa } from "./entities/Koopa.js";
 import { setupKeyboard } from "./input.js";
 import { setupMouseControl } from "./debug.js";
 import { createCameraLayer } from "./layers.js";
@@ -10,8 +11,8 @@ import { createCameraLayer } from "./layers.js";
 const canvas = document.getElementById("screen");
 const context = canvas.getContext("2d");
 
-Promise.all([loadMario(), loadGoomba(), loadLevel("1-1")]).then(
-  ([createMario, createGoomba, level]) => {
+Promise.all([loadMario(), loadGoomba(), loadKoopa(), loadLevel("1-1")]).then(
+  ([createMario, createGoomba, createKoopa, level]) => {
     const camera = new Camera();
     // window.camera = camera;
 
@@ -22,6 +23,10 @@ Promise.all([loadMario(), loadGoomba(), loadLevel("1-1")]).then(
     const goomba = createGoomba();
     goomba.pos.x = 220;
     level.entities.add(goomba);
+
+    const koopa = createKoopa();
+    koopa.pos.x = 260;
+    level.entities.add(koopa);
 
     // Debug camera border.
     level.comp.layers.push(createCameraLayer(camera));
